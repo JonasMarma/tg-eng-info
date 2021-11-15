@@ -1,0 +1,51 @@
+% ----------------------------------------------------------
+% Introdução 
+% Capítulo sem numeração, mas presente no Sumário
+% ----------------------------------------------------------
+
+\chapter[Fundamentação Teórica]{Fundamentação Teórica}
+
+Foi feita uma pesquisa buscando entender as principais ferramentar utilizadas atualmente na predição de séries temporais, especialmente com aplicações econômicas. Decidiu-se que o trabalho focará inicialmente na comparação de previsões feitas com modelos já comumente utilizados na indústria tentando buscar correlações entre datasets de históricos de vendas e datasets com variáveis externas às empresas. A seguir, são discutidas as ferramentas e considerações que guiarão inicialmente o trabalho:
+
+\section{Tensorflow e Keras}
+Durante este trabalho serão utilizadas bibliotecas já existentes de estatística e aprendizado de máquina com o principal objetivo de evitar a implementação dos algoritmos, que não é o objetivo do projeto.
+
+Para isso, foi escolhida a biblioteca TensorFlow, uma biblioteca gratuita e de código aberto, desenvolvida pelo Google inicialmente para fins de pesquisa. O código fonte será primáriamente desenvolvido em Python utilizando Keras, uma API de auto nível para o TensowrFlow desenvolvida para facilitar sua utilização. \cite{keras} \cite{tensorflow}
+
+\section{Variáveis de entrada}
+As principais variáveis de entrada utilizadas em predições de séries temporais geralmente são os valores anteriores dessa série temporal. Existem algumas escolhas a serem feitas na forma como esses valores são considerados dentro do modelo, tais como a granularidade temporal, a janela de valores a serem considerados e a necessidade de se normalizar esses valores.
+
+Além dos últimos valores da série temporal, outros dados podem ser utilizados para enriquecer o modelo. É possível, por exemplo, buscar correlações com séries temporais paralelas como volumes de vendas de outros produtos,indicadores econômicos, indicadores do clima e variáveis qualitativas como a existência de feriados e acontecimentos políticos.
+
+\section{Métricas de avaliação}
+A métrica utilizada para avaliar e comparar o desempenho de um conjunto de algoritmos não impacta somente a comparação feita, mas também impacta diretamente o desempenho dos algoritmos em casos de aprendizado supervisionado.
+
+Por isso, serão utilizados diversos métodos tanto para a avaliação dos erros de predição, como o RMSE, RRMSE, MAE, MAPE e MASE, como para a seleção dos dados de entrada para a avaliação, como o K-Fold e validação cruzada.
+
+\section{Técnicas de predição}
+
+Em um modelo Naïve de uma série temporal, os próximos n valores são preditos como sendo simplesmente igual ao último valor encontrado. O modelo SNaïve é uma extensão do modelo Naïve em que se assume alguma sazonalidade em um período T e os próximos n valores contidos dentro desse período T são iguais aos últimos N valores, ou seja, é prevista uma repetição dos últimos n valores contidos em T. O modelo de média móvel, por sua vez, prevê que os próximos n valores são iguais à média móvel dos últimos valores dentro de um período T. Esses modelos muitas vezes são considerados simples e espera-se que suas previsões sejam pouco precisas, mas eles são utilizados como métricas base.
+
+% ARMA, ARIMA, SARIMA
+O modelo ARMA (Autoregressive Moving Average) é um modelo utilizado para predição de séries temporais de uma variável. Em ambos os modelos, são combinadas autoregressões (AR) para expressar uma dependência linear do próximo valor da série em relação aos valores anteriores e médias móveis (MA) para expressas a tendência mais recente da série temporal.
+
+Como extensões do modelo ARMA, o modelo ARIMA (Autoregressive Integrated Moving Average) faz previsões em derivadas temporais da série temporal para evitar interferências de tendências de longo prazo em previsões de curto prazo e o modelo SARIMA (Seasonal Autoregressive Integrated Moving Average) leva em conta sazonalidades. Ambos os modelos são amplamente utilizados em previsões de séries temporais.
+
+% Filtros adaptativos
+Numa abordagem utilizando filtros adaptativos busca-se minimizar uma função de erro entre um sinal de saída do filtro e um sinal desejado por meio do ajuste dos coeficientes do filtro.
+
+Para o caso de uma pedição de série temporal, utiliza-se como sinal de referência e de entrada do filtro uma série temporal e sua versão atrasada, respectivamente. Dessa forma, os coeficientes do filtro são ajustados de forma a identificar alguma tendência no sinal e tentar prever valores futuros.
+
+(o ARIMA é um tipo de filtro adaptativo, né???)
+
+% ANNs
+
+Existem ainda modelos derivados de redes neurais artificiais como as RNNs (Recurrent Neural Network), que são uma adaptação do perceptron de múltiplas camadas em que os neurônios de entrada representam uma sequência de valores e há um efeito de memória nas camadas escondidas, e as redes derivadas das RNNs como as LSTMs (Long Short-Term Memory) e GRUs (Gated Recurrent Unit).
+
+Por fim, existem os métodos de ensamble, que consistem em combinar diversos modelos de predição, variando seus parâmetros de forma automática a fim de obter a melhor predição possível.
+
+\section{Datasets}
+
+Além de possíveis datasets com dados falsos gerados para controle, pretende-se utilizar datasets reais. Foram encontrados datasets que podem ser úteis principalmente no agregador de datasets Kaggle \cite{kaggle}, já fornecidos e tratados por empresas interessadas no desenvolvimento da ciência de dados aplicada em comércio de varejo. \cite{olist} \cite{rees46}
+
+Também foi feita uma pesquisa buscando datasets que podem fornecer dados externos que considera-se intuitivamente que podem afetar as previsões de demanda que se deseja fazer. Destacam-se os dados abertos do governo \cite{governo}, as cotações históricas do B3 \cite{b3} e dados fornecidos por ferramentas de busca como o Google Trends \cite{googletrends}.
